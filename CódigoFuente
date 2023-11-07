@@ -1,3 +1,61 @@
+//Ejercicio 1//////////////////////////////////////////
+public class Hora {
+    private int horas;
+    private int minutos;
+    private int segundos;
+
+    public Hora() {
+        this.horas = 0;
+        this.minutos = 0;
+        this.segundos = 0;
+    }
+
+    public Hora(int horas, int minutos, int segundos) {
+        this.horas = horas;
+        this.minutos = minutos;
+        this.segundos = segundos;
+    }
+
+    public void mostrarHora() {
+        System.out.printf("%02d:%02d:%02d\n", horas, minutos, segundos);
+    }
+
+    public void sumarHoras(Hora otraHora) {
+        this.segundos += otraHora.segundos;
+        this.minutos += otraHora.minutos;
+        this.horas += otraHora.horas;
+
+        if (this.segundos >= 60) {
+            this.segundos -= 60;
+            this.minutos++;
+        }
+        if (this.minutos >= 60) {
+            this.minutos -= 60;
+            this.horas++;
+        }
+    }
+
+    public static void main(String[] args) {
+        Hora hora1 = new Hora(3, 45, 30); 
+        Hora hora2 = new Hora(1, 15, 20); 
+        Hora hora3 = new Hora(); 
+
+        System.out.println("Hora 1:");
+        hora1.mostrarHora();
+        System.out.println("Hora 2:");
+        hora2.mostrarHora();
+
+        hora3.sumarHoras(hora1);
+        hora3.sumarHoras(hora2);
+
+        System.out.println("Resultado de la suma de hora1 y hora2:");
+        hora3.mostrarHora();
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+//Ejercicio 2///////////////////////////////////////
 import java.util.Scanner;
 
 public class Empleado {
@@ -24,5 +82,377 @@ public class Empleado {
         empleado.leerDatos();
         System.out.println("Datos del empleado:");
         empleado.verDatos();
+    }
+}
+///////////////////////////////////////////////////////
+
+//Ejercicio 3//////////////////////////////////////////
+
+import java.util.Scanner;
+
+public class Empleado {
+    private String nombre;
+    private int numeroEmpleado;
+
+    public Empleado(String nombre, int numeroEmpleado) {
+        this.nombre = nombre;
+        this.numeroEmpleado = numeroEmpleado;
+    }
+
+    public void verDatos() {
+        System.out.println("Nombre del empleado: " + nombre);
+        System.out.println("Número de empleado: " + numeroEmpleado);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Empleado[] empleados = new Empleado[50];
+
+        for (int i = 0; i < 50; i++) {
+            System.out.print("Ingrese el nombre del empleado " + (i + 1) + ": ");
+            String nombre = scanner.nextLine();
+
+            System.out.print("Ingrese el número de empleado " + (i + 1) + ": ");
+            int numeroEmpleado = scanner.nextInt();
+            scanner.nextLine(); 
+
+            empleados[i] = new Empleado(nombre, numeroEmpleado);
+        }
+
+        System.out.println("Datos de los empleados:");
+
+        for (int i = 0; i < 50; i++) {
+            System.out.println("Empleado " + (i + 1) + ":");
+            empleados[i].verDatos();
+            System.out.println();
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
+//Ejercicio 4//////////////////////////////////////////////////////
+
+public class Hora {
+    private int horas;
+    private int minutos;
+    private int segundos;
+
+    public Hora(int horas, int minutos, int segundos) {
+        this.horas = horas;
+        this.minutos = minutos;
+        this.segundos = segundos;
+    }
+
+    public int getHoras() {
+        return horas;
+    }
+
+    public int getMinutos() {
+        return minutos;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
+
+    public void avanzar(int horas, int minutos, int segundos) {
+        this.segundos += segundos;
+        this.minutos += minutos;
+        this.horas += horas;
+
+        if (this.segundos >= 60) {
+            this.minutos += this.segundos / 60;
+            this.segundos %= 60;
+        }
+
+        if (this.minutos >= 60) {
+            this.horas += this.minutos / 60;
+            this.minutos %= 60;
+        }
+
+        this.horas %= 24;
+    }
+
+    public void ponerACero() {
+        this.horas = 0;
+        this.minutos = 0;
+        this.segundos = 0;
+    }
+
+    public void visualizar() {
+        System.out.printf("%02d:%02d:%02d%n", horas, minutos, segundos);
+    }
+
+    public static void main(String[] args) {
+        Hora hora = new Hora(9, 11, 23);
+
+        System.out.println("Hora actual:");
+        hora.visualizar();
+
+        hora.avanzar(1, 25, 12);
+        System.out.println("Después de avanzar 1 hora, 25 minutos y 12 segundos:");
+        hora.visualizar();
+
+        hora.ponerACero();
+        System.out.println("Después de poner a cero:");
+        hora.visualizar();
+    }
+}
+
+//////////////////////////////////////////////////////////////////////
+//Ejercicio 5////////////////////////////////////////////////////////////////
+
+public class Cadena {
+    private int longitud;
+    private String cadena;
+
+    public Cadena(String cadena) {
+        this.cadena = cadena;
+        this.longitud = cadena.length();
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public String getCadena() {
+        return cadena;
+    }
+
+    public char caracter(int i) {
+        if (i >= 0 && i < longitud) {
+            return cadena.charAt(i);
+        } else {
+            return '?';
+        }
+    }
+
+    public void mostrarCadena() {
+        System.out.println(cadena);
+    }
+
+    public static void main(String[] args) {
+        Cadena miCadena = new Cadena("Ejemplo de cadena");
+
+        miCadena.mostrarCadena();
+
+        System.out.println("Longitud de la cadena: " + miCadena.getLongitud());
+
+        int indice = 3;
+        char caracter = miCadena.caracter(indice);
+
+        if (caracter != -1) {
+            System.out.println("Carácter en el índice " + indice + ": " + caracter);
+        } else {
+            System.out.println("Índice fuera de rango.");
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Ejercicio 6/////////////////////////////////////////////////////////////////////////////////
+
+import java.util.ArrayList;
+import java.util.List;
+
+class LAN {
+    private List<Node> nodes = new ArrayList<>();
+    private String topology;
+    private int packetSize;
+    private List<Integer> packetDeliveryTimes = new ArrayList<>();
+
+    public void setTopology(String topology) {
+        this.topology = topology;
+    }
+
+    public void setPacketSize(int packetSize) {
+        this.packetSize = packetSize;
+    }
+
+    public void addNode(Node node) {
+        nodes.add(node);
+    }
+
+    public void removeNode(Node node) {
+        nodes.remove(node);
+    }
+
+    public List<Node> listNodes() {
+        return nodes;
+    }
+
+    public void sendPacket(Node source, Node destination, String message) {
+        int deliveryTime = (int) (Math.random() * 10); // Simulación del tiempo de entrega
+        packetDeliveryTimes.add(deliveryTime);
+
+        System.out.println("Nodo " + source.getName() + " envía un paquete a Nodo " + destination.getName() + ": " + message);
+        System.out.println("Tiempo de entrega estimado: " + deliveryTime + " ms");
+    }
+
+    public void broadcastPacket(Node source, String message) {
+        for (Node node : nodes) {
+            if (node != source) {
+                sendPacket(source, node, message);
+            }
+        }
+    }
+
+    public double calculateAverageDeliveryTime() {
+        double sum = 0;
+        for (int time : packetDeliveryTimes) {
+            sum += time;
+        }
+        return sum / packetDeliveryTimes.size();
+    }
+}
+
+class Node {
+    private String name;
+
+    public Node(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+public class LANSimulation {
+    public static void main(String[] args) {
+        LAN lan = new LAN();
+
+        lan.setTopology("Estrella");
+
+        lan.setPacketSize(64); 
+        Node node1 = new Node("Nodo1");
+        Node node2 = new Node("Nodo2");
+        Node node3 = new Node("Nodo3");
+
+        lan.addNode(node1);
+        lan.addNode(node2);
+        lan.addNode(node3);
+
+        lan.sendPacket(node1, node2, "Hola desde Nodo1");
+
+        lan.broadcastPacket(node2, "Mensaje de difusión desde Nodo2");
+
+        double averageDeliveryTime = lan.calculateAverageDeliveryTime();
+        System.out.println("Tiempo promedio de entrega de paquetes: " + averageDeliveryTime + " ms");
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Ejercicio 7/////////////////////////////////////////////////////////////////////////////////////////
+
+import java.util.ArrayList;
+
+class Empleado {
+    private String nombre;
+    private double salario;
+
+    public Empleado(String nombre, double salario) {
+        this.nombre = nombre;
+        this.salario = salario;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public double calcularSalario() {
+        return salario;
+    }
+
+    public void calcularDespido() {
+    }
+
+    public void darDeAlta() {
+    }
+
+    public void jubilacion() {
+    }
+}
+
+class Supervisor extends Empleado {
+    private ArrayList<Empleado> empleadosSubordinados;
+
+    public Supervisor(String nombre, double salario) {
+        super(nombre, salario);
+        empleadosSubordinados = new ArrayList<>();
+    }
+
+    public void agregarEmpleadoSubordinado(Empleado empleado) {
+        empleadosSubordinados.add(empleado);
+    }
+
+    @Override
+    public double calcularSalario() {
+        return getSalario(); 
+    }
+
+    public double calcularPrima() {
+        return 100.0; 
+    }
+}
+
+class Gerente extends Supervisor {
+    private double bono;
+
+    public Gerente(String nombre, double salario, double bono) {
+        super(nombre, salario);
+        this.bono = bono;
+    }
+
+    @Override
+    public double calcularSalario() {
+        return getSalario() + bono; 
+    }
+
+    public double calcularBono() {
+        return bono;
+    }
+}
+
+class RecursosHumanos {
+    public void accesoConfidencial() {
+    }
+}
+
+class SUNAT {
+    public void accesoConfidencial() {
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Empleado empleado1 = new Empleado("Empleado1", 1000.0);
+        Supervisor supervisor1 = new Supervisor("Supervisor1", 1500.0);
+        Gerente gerente1 = new Gerente("Gerente1", 2000.0, 500.0);
+
+        supervisor1.agregarEmpleadoSubordinado(empleado1);
+
+        double salarioEmpleado1 = empleado1.calcularSalario();
+        double salarioSupervisor1 = supervisor1.calcularSalario();
+        double primaSupervisor1 = supervisor1.calcularPrima();
+        double salarioGerente1 = gerente1.calcularSalario();
+        double bonoGerente1 = gerente1.calcularBono();
+
+        System.out.println("Salario de Empleado1: " + salarioEmpleado1);
+        System.out.println("Salario de Supervisor1: " + salarioSupervisor1);
+        System.out.println("Prima de Supervisor1: " + primaSupervisor1);
+        System.out.println("Salario de Gerente1: " + salarioGerente1);
+        System.out.println("Bono de Gerente1: " + bonoGerente1);
+
+        RecursosHumanos recursosHumanos = new RecursosHumanos();
+        SUNAT sunat = new SUNAT();
+
+        recursosHumanos.accesoConfidencial();
+        sunat.accesoConfidencial();
     }
 }
